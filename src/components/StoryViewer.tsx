@@ -135,18 +135,23 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             {/* Read text aloud section */}
             <div className="w-full bg-white rounded-2xl p-4 border-2 border-slate-200 shadow-sm flex flex-col items-center gap-3 relative">
               {/* Audio Reading Trigger */}
-              <button
-                onClick={handleReadSlide}
-                className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md ${
-                  isReading
-                    ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
-                    : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
-                }`}
-                title="اقْرَأْ لِي القِصَّةَ"
-                id={`btn-narrate-slide-${currentSlideIndex}`}
-              >
-                🔊
-              </button>
+              <div className="flex flex-col items-center gap-1.5">
+                <button
+                  onClick={handleReadSlide}
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md ${
+                    isReading
+                      ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
+                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
+                  }`}
+                  title="اقْرَأْ لِي القِصَّةَ"
+                  id={`btn-narrate-slide-${currentSlideIndex}`}
+                >
+                  🔊
+                </button>
+                <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-100 flex items-center gap-1 animate-bounce">
+                  💡 اضْغَطْ عَلَى أَيِّ كَلِمَةٍ لِنُطْقِهَا!
+                </span>
+              </div>
 
               {/* Story text with Tashkeel */}
               <p className="text-md md:text-lg font-extrabold text-slate-700 leading-relaxed text-center font-sans tracking-wide">
@@ -157,9 +162,19 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                   return (
                     <span
                       key={i}
-                      className={`inline-block mx-0.5 transition-colors ${
-                        isHighlighted ? 'text-amber-500 underline decoration-wavy decoration-amber-400 font-extrabold text-lg md:text-xl' : ''
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()«»""'']/g,"");
+                        if (cleanWord.trim()) {
+                          speakArabicText(cleanWord);
+                        }
+                      }}
+                      className={`inline-block mx-0.5 px-1 rounded cursor-pointer transition-all duration-150 active:scale-90 ${
+                        isHighlighted 
+                          ? 'text-amber-600 underline decoration-wavy decoration-amber-400 font-extrabold text-lg md:text-xl hover:bg-amber-100 hover:scale-105' 
+                          : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:scale-105'
                       }`}
+                      title="اضْغَطْ لِسَمَاعِ الكَلِمَةِ"
                     >
                       {word}{' '}
                     </span>

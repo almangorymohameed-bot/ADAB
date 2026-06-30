@@ -150,6 +150,142 @@ export const Illustration: React.FC<IllustrationProps> = ({ id, className = "w-f
         </svg>
       );
 
+    case 'hungry_bunny':
+      return (
+        <svg viewBox="0 0 200 160" className={className} id="hungry-bunny-svg">
+          {/* Background pastel bubble */}
+          <circle cx="100" cy="80" r="70" fill="#fffbeb" />
+          {/* Table */}
+          <rect x="25" y="115" width="150" height="15" rx="5" fill="#ffedd5" stroke="#f97316" strokeWidth="2.5" />
+          {/* Plate with carrots */}
+          <ellipse cx="100" cy="115" rx="35" ry="8" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2.5" />
+          {/* Carrots */}
+          <polygon points="85,112 110,110 100,105" fill="#f97316" stroke="#ea580c" strokeWidth="2" />
+          <path d="M 85 112 Q 80 115 78 112" stroke="#22c55e" strokeWidth="2" fill="none" />
+          <polygon points="95,115 120,112 110,108" fill="#f97316" stroke="#ea580c" strokeWidth="2" />
+          {/* Bunny body */}
+          <ellipse cx="100" cy="98" rx="28" ry="24" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny head */}
+          <circle cx="100" cy="60" r="22" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny ears */}
+          <ellipse cx="88" cy="30" rx="6" ry="18" transform="rotate(-15, 88, 30)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="88" cy="30" rx="3" ry="12" transform="rotate(-15, 88, 30)" fill="#fecdd3" />
+          <ellipse cx="112" cy="30" rx="6" ry="18" transform="rotate(15, 112, 30)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="112" cy="30" rx="3" ry="12" transform="rotate(15, 112, 30)" fill="#fecdd3" />
+          {/* Smiley eyes/mouth */}
+          {renderSmiley(100, 58, 0.85)}
+          <polygon points="98,63 102,63 100,65" fill="#f43f5e" />
+          {/* Paw indicators */}
+          <ellipse cx="80" cy="115" rx="7" ry="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+          <ellipse cx="120" cy="115" rx="7" ry="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+          {/* Sparkles */}
+          {renderStar(45, 45, 6)}
+          {renderStar(155, 50, 7)}
+        </svg>
+      );
+
+    case 'bunny_saying_bismillah':
+      return (
+        <svg viewBox="0 0 200 160" className={className} id="bunny-saying-bismillah-svg">
+          {/* Background pastel bubble */}
+          <circle cx="100" cy="80" r="70" fill="#f0f9ff" />
+          {/* Speech bubble saying Bismillah */}
+          <rect x="35" y="10" width="130" height="26" rx="13" fill="#38bdf8" stroke="#0284c7" strokeWidth="2" />
+          <polygon points="100,36 95,36 100,42" fill="#38bdf8" stroke="#0284c7" strokeWidth="2" />
+          <text x="100" y="26" fontFamily="'Tajawal', sans-serif" fontWeight="bold" fontSize="10.5" fill="#ffffff" textAnchor="middle">بِسْمِ اللَّهِ</text>
+          {/* Bunny body */}
+          <ellipse cx="100" cy="100" rx="28" ry="24" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny head */}
+          <circle cx="100" cy="62" r="22" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny ears */}
+          <ellipse cx="88" cy="32" rx="6" ry="18" transform="rotate(-10, 88, 32)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="88" cy="32" rx="3" ry="12" transform="rotate(-10, 88, 32)" fill="#fecdd3" />
+          <ellipse cx="112" cy="32" rx="6" ry="18" transform="rotate(10, 112, 32)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="112" cy="32" rx="3" ry="12" transform="rotate(10, 112, 32)" fill="#fecdd3" />
+          {/* Smiley eyes/mouth */}
+          {renderSmiley(100, 60, 0.85, true)}
+          <polygon points="98,65 102,65 100,67" fill="#f43f5e" />
+          {/* Hands raised in supplication/politeness */}
+          <ellipse cx="86" cy="90" rx="6" ry="8" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+          <ellipse cx="114" cy="90" rx="6" ry="8" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+          {/* Sparkles */}
+          {renderStar(40, 50, 7)}
+          {renderStar(160, 55, 6)}
+        </svg>
+      );
+
+    case 'bunny_remembering':
+      return (
+        <svg viewBox="0 0 200 160" className={className} id="bunny-remembering-svg">
+          {/* Background pastel bubble */}
+          <circle cx="100" cy="80" r="70" fill="#fffde7" />
+          {/* Glowing lightbulb over head */}
+          <circle cx="100" cy="18" r="8" fill="#fef08a" stroke="#ca8a04" strokeWidth="2" />
+          <rect x="97" y="26" width="6" height="4" fill="#94a3b8" />
+          <line x1="100" y1="8" x2="100" y2="4" stroke="#eab308" strokeWidth="2" strokeLinecap="round" />
+          <line x1="88" y1="15" x2="84" y2="13" stroke="#eab308" strokeWidth="2" strokeLinecap="round" />
+          <line x1="112" y1="15" x2="116" y2="13" stroke="#eab308" strokeWidth="2" strokeLinecap="round" />
+          {/* Bunny body */}
+          <ellipse cx="100" cy="100" rx="28" ry="24" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny head */}
+          <circle cx="100" cy="62" r="22" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny ears (one straight, one bent) */}
+          <ellipse cx="86" cy="32" rx="6" ry="18" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="86" cy="32" rx="3" ry="12" fill="#fecdd3" />
+          <path d="M 110 50 Q 125 35 120 28 Q 115 24 108 38" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" strokeLinejoin="round" />
+          <path d="M 112 47 Q 120 37 118 32 Q 115 30 110 38" fill="#fecdd3" />
+          {/* Expressive happy face */}
+          <circle cx="92" cy="56" r="3.5" fill="#1e293b" />
+          <circle cx="91" cy="54" r="1" fill="#ffffff" />
+          <path d="M104,56 Q108,52 112,56" stroke="#1e293b" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <circle cx="83" cy="64" r="4.5" fill="#fca5a5" opacity="0.6" />
+          <circle cx="117" cy="64" r="4.5" fill="#fca5a5" opacity="0.6" />
+          <path d="M96,65 Q100,74 104,65 Z" fill="#f43f5e" stroke="#1e293b" strokeWidth="2" />
+          <polygon points="98,61 102,61 100,63" fill="#f43f5e" />
+          {/* Left paw pointing up to head/idea */}
+          <path d="M 80 100 Q 72 80 82 72" fill="none" stroke="#64748b" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="82" cy="72" r="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+          <ellipse cx="116" cy="100" rx="6" ry="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2.5" />
+        </svg>
+      );
+
+    case 'bunny_thanking_allah':
+      return (
+        <svg viewBox="0 0 200 160" className={className} id="bunny-thanking-allah-svg">
+          {/* Background pastel bubble */}
+          <circle cx="100" cy="80" r="70" fill="#ecfdf5" />
+          {/* Table */}
+          <rect x="25" y="115" width="150" height="15" rx="5" fill="#ffedd5" stroke="#f97316" strokeWidth="2.5" />
+          {/* Plate with left-overs (just carrot leaves) */}
+          <ellipse cx="100" cy="115" rx="35" ry="8" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="2.5" />
+          <path d="M 90 112 Q 88 108 85 106 M 105 112 Q 108 108 110 106" stroke="#22c55e" strokeWidth="2" fill="none" />
+          {/* Bunny full body with a happy full tummy */}
+          <ellipse cx="100" cy="100" rx="32" ry="26" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny head */}
+          <circle cx="100" cy="62" r="22" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          {/* Bunny ears */}
+          <ellipse cx="88" cy="32" rx="6" ry="18" transform="rotate(-15, 88, 32)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="88" cy="32" rx="3" ry="12" transform="rotate(-15, 88, 32)" fill="#fecdd3" />
+          <ellipse cx="112" cy="32" rx="6" ry="18" transform="rotate(15, 112, 32)" fill="#f1f5f9" stroke="#64748b" strokeWidth="3" />
+          <ellipse cx="112" cy="32" rx="3" ry="12" transform="rotate(15, 112, 32)" fill="#fecdd3" />
+          {/* Content, smiling closed eyes face */}
+          <path d="M85,58 Q90,53 95,58" stroke="#1e293b" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d="M105,58 Q110,53 115,58" stroke="#1e293b" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <circle cx="82" cy="63" r="4.5" fill="#fca5a5" opacity="0.6" />
+          <circle cx="118" cy="63" r="4.5" fill="#fca5a5" opacity="0.6" />
+          <path d="M94,64 Q100,72 106,64" stroke="#1e293b" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <polygon points="98,61 102,61 100,63" fill="#f43f5e" />
+          {/* Rubbing full belly */}
+          <path d="M 72 98 Q 88 105 92 100" fill="none" stroke="#64748b" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="92" cy="100" r="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2" />
+          <path d="M 128 98 Q 112 105 108 100" fill="none" stroke="#64748b" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="108" cy="100" r="5" fill="#f1f5f9" stroke="#64748b" strokeWidth="2" />
+          {/* Glowing reward stars */}
+          {renderStar(42, 45, 9)}
+          {renderStar(155, 35, 7)}
+        </svg>
+      );
+
     // -----------------------------------------------------------------
     // PRAYER CATEGORY ILLUSTRATIONS
     // -----------------------------------------------------------------

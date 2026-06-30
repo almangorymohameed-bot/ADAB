@@ -163,22 +163,44 @@ export const GameViewer: React.FC<GameViewerProps> = ({
               </div>
 
               {/* Speaker sound button */}
-              <button
-                onClick={handleReadItem}
-                className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md z-10 ${
-                  isReading
-                    ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
-                    : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
-                }`}
-                title="اقْرَأْ لِي السُّلُوكَ"
-                id={`btn-read-behavior-${currentItem.id}`}
-              >
-                🔊
-              </button>
+              <div className="flex flex-col items-center gap-1.5 z-10">
+                <button
+                  onClick={handleReadItem}
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md ${
+                    isReading
+                      ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
+                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
+                  }`}
+                  title="اقْرَأْ لِي السُّلُوكَ"
+                  id={`btn-read-behavior-${currentItem.id}`}
+                >
+                  🔊
+                </button>
+                <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-100 flex items-center gap-1 animate-bounce">
+                  💡 اضْغَطْ عَلَى أَيِّ كَلِمَةٍ لِنُطْقِهَا!
+                </span>
+              </div>
 
               {/* Large Behavior Text with Tashkeel */}
               <p className="text-lg md:text-xl font-black text-slate-700 leading-relaxed text-center font-sans tracking-wide relative z-10">
-                {getDialectText(currentItem.text, dialect)}
+                {getDialectText(currentItem.text, dialect).split(" ").map((word, i) => {
+                  return (
+                    <span
+                      key={i}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()«»""'']/g,"");
+                        if (cleanWord.trim()) {
+                          speakArabicText(cleanWord);
+                        }
+                      }}
+                      className="inline-block mx-0.5 px-1 rounded cursor-pointer transition-all duration-150 active:scale-90 hover:bg-amber-100 hover:text-amber-900 hover:scale-105"
+                      title="اضْغَطْ لِسَمَاعِ الكَلِمَةِ"
+                    >
+                      {word}{' '}
+                    </span>
+                  );
+                })}
               </p>
             </div>
 
