@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
     playPopSound();
     if (soundEnabled) {
       const texts = [
-        userName ? `مرحباً يا ${userName}! كفك يا بطل! أنت رائع جداً!` : "مرحباً يا بطل! كفك يا بطل! أهلاً بك في تطبيق أدبي!",
+        userName ? `مرحباً يا ${userName}! كفك يا بطل! أنت رائع جداً!` : "مرحباً يا بطل! كفك يا بطل! أهلاً بك في تطبيق آدابي!",
         "اليوم سنتعلم آداباً إسلامية جميلة لتفوز بالجوائز!"
       ];
       // Speak the greeting
@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (soundEnabled) {
-        speakArabicText(userName ? `مرحباً يا ${userName}! أهلاً بك في تطبيق أدبي!` : "أهلاً بك يا بطل في تطبيق أدبي! اضغط على الأشكال لتبدأ التعلم!");
+        speakArabicText(userName ? `مرحباً يا ${userName}! أهلاً بك في تطبيق آدابي!` : "أهلاً بك يا بطل في تطبيق آدابي! اضغط على الأشكال لتبدأ التعلم!");
       }
     }, 1000);
     return () => clearTimeout(timer);
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Center Title Logo */}
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-1.5" id="app-logo-area">
-            <span className="text-4xl font-extrabold text-amber-600 font-sans tracking-wide drop-shadow-sm">أَدَبِي</span>
+            <span className="text-4xl font-extrabold text-amber-600 font-sans tracking-wide drop-shadow-sm">آدَابِي</span>
             <span className="text-3xl">📖🤲</span>
           </div>
           <p className="text-[10px] font-bold text-amber-500 tracking-widest uppercase font-mono mt-0.5">آدَابِي اليَوْمِيَّة</p>
