@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Custom background pattern reminiscent of animal doodles */
+.doodle-bg {
+  background-color: #fcf9f2;
+  background-image: radial-gradient(#fed7aa 1.2px, transparent 1.2px), radial-gradient(#fecdd3 1.2px, #fcf9f2 1.2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+
+/* Forest Theme: Soft mossy greens and nature vibes */
+.forest-bg {
+  background-color: #f2faf4;
+  background-image: radial-gradient(#a7f3d0 1.2px, transparent 1.2px), radial-gradient(#c6f6d5 1.2px, #f2faf4 1.2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+
+/* Space Theme: Deep starry midnight blue and neon dots */
+.space-bg {
+  background-color: #0d1224;
+  background-image: radial-gradient(#6366f1 1.2px, transparent 1.2px), radial-gradient(#c7d2fe 1px, #0d1224 1.2px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+/* Sea Theme: Aquatic light cyan blue and bubble dots */
+.sea-bg {
+  background-color: #f0f9ff;
+  background-image: radial-gradient(#7dd3fc 1.2px, transparent 1.2px), radial-gradient(#e0f2fe 1.2px, #f0f9ff 1.2px);
+  background-size: 45px 45px;
+  background-position: 0 0, 22px 22px;
+}
+

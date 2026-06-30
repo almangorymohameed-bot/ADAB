@@ -1,0 +1,6 @@
+{
+  "name": "Adabi",
+  "description": "تطبيق أدبي لتعليم الآداب الإسلامية للأطفال في مرحلة رياض الأطفال (KG1) من خلال ألعاب تفاعلية وقصص مشوقة وجوائز تحفيزية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
