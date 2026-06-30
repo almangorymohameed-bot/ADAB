@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Game, Category } from '../types';
 import { speakArabicText, stopSpeaking, playPopSound, playSuccessSound, playFailureSound, playTrophyUnlockSound } from '../utils/audio';
+import { getDialectText } from '../utils/dialect';
 
 interface GameViewerProps {
   game: Game;
@@ -15,6 +16,7 @@ interface GameViewerProps {
   onComplete: () => void;
   onClose: () => void;
   lowEndMode?: boolean;
+  dialect?: 'standard' | 'sudanese';
 }
 
 export const GameViewer: React.FC<GameViewerProps> = ({
@@ -23,7 +25,8 @@ export const GameViewer: React.FC<GameViewerProps> = ({
   soundEnabled,
   onComplete,
   onClose,
-  lowEndMode = false
+  lowEndMode = false,
+  dialect = 'standard'
 }) => {
   const sortingItems = game.sortingItems || [];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,7 +49,8 @@ export const GameViewer: React.FC<GameViewerProps> = ({
     if (!soundEnabled || !currentItem) return;
     setIsReading(true);
     playPopSound();
-    speakArabicText(currentItem.text, () => {
+    const translatedText = getDialectText(currentItem.text, dialect);
+    speakArabicText(translatedText, () => {
       setIsReading(false);
     });
   };
@@ -174,7 +178,7 @@ export const GameViewer: React.FC<GameViewerProps> = ({
 
               {/* Large Behavior Text with Tashkeel */}
               <p className="text-lg md:text-xl font-black text-slate-700 leading-relaxed text-center font-sans tracking-wide relative z-10">
-                {currentItem.text}
+                {getDialectText(currentItem.text, dialect)}
               </p>
             </div>
 

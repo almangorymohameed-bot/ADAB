@@ -76,4 +76,5 @@ export interface UserProgress {
   lastActiveDate?: string;
   theme?: 'default' | 'forest' | 'space' | 'sea';
   lowEndMode?: boolean;
+  dialect?: 'standard' | 'sudanese';
 }

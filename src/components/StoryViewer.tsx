@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Story, Category } from '../types';
 import { Illustration } from './Illustration';
 import { speakArabicText, stopSpeaking, playPopSound, playSuccessSound, playTrophyUnlockSound } from '../utils/audio';
+import { getDialectText, getSudaneseHighlightWord } from '../utils/dialect';
 
 interface StoryViewerProps {
   story: Story;
@@ -16,6 +17,7 @@ interface StoryViewerProps {
   onComplete: () => void;
   onClose: () => void;
   lowEndMode?: boolean;
+  dialect?: 'standard' | 'sudanese';
 }
 
 export const StoryViewer: React.FC<StoryViewerProps> = ({
@@ -24,7 +26,8 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
   soundEnabled,
   onComplete,
   onClose,
-  lowEndMode = false
+  lowEndMode = false,
+  dialect = 'standard'
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isReading, setIsReading] = useState(false);
@@ -43,7 +46,8 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
     if (!soundEnabled) return;
     setIsReading(true);
     playPopSound();
-    speakArabicText(currentSlide.text, () => {
+    const translatedText = getDialectText(currentSlide.text, dialect);
+    speakArabicText(translatedText, () => {
       setIsReading(false);
     });
   };
@@ -146,9 +150,10 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
 
               {/* Story text with Tashkeel */}
               <p className="text-md md:text-lg font-extrabold text-slate-700 leading-relaxed text-center font-sans tracking-wide">
-                {currentSlide.text.split(" ").map((word, i) => {
+                {getDialectText(currentSlide.text, dialect).split(" ").map((word, i) => {
                   const cleanedWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-                  const isHighlighted = currentSlide.highlightWord && cleanedWord.includes(currentSlide.highlightWord);
+                  const actualHighlightWord = dialect === 'sudanese' ? getSudaneseHighlightWord(currentSlide.highlightWord) : currentSlide.highlightWord;
+                  const isHighlighted = actualHighlightWord && cleanedWord.includes(actualHighlightWord.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
                   return (
                     <span
                       key={i}

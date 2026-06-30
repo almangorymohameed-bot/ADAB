@@ -14,7 +14,7 @@ import { StoryViewer } from './components/StoryViewer';
 import { GameViewer } from './components/GameViewer';
 import { BadgeCabinet } from './components/BadgeCabinet';
 import { ParticleCelebration } from './components/ParticleCelebration';
-import { playPopSound, playSuccessSound, speakArabicText, stopSpeaking } from './utils/audio';
+import { playPopSound, playSuccessSound, speakArabicText, stopSpeaking, setAudioDialect } from './utils/audio';
 
 const STORAGE_KEY = 'adabi_child_progress_v1';
 const SOUND_KEY = 'adabi_sound_enabled';
@@ -49,6 +49,12 @@ export default function App() {
   const [selectedAvatar, setSelectedAvatar] = useState('🐼');
   const [selectedTheme, setSelectedTheme] = useState<'default' | 'forest' | 'space' | 'sea'>('default');
   const [lowEndMode, setLowEndMode] = useState<boolean>(false);
+  const [selectedDialect, setSelectedDialect] = useState<'standard' | 'sudanese'>('standard');
+
+  // Sync selected dialect with audio engine
+  useEffect(() => {
+    setAudioDialect(selectedDialect);
+  }, [selectedDialect]);
 
   // Load progress and sound configuration on mount
   useEffect(() => {
@@ -63,6 +69,9 @@ export default function App() {
         if (parsed.lowEndMode !== undefined) {
           setLowEndMode(parsed.lowEndMode);
         }
+        if (parsed.dialect) {
+          setSelectedDialect(parsed.dialect);
+        }
       } catch (e) {
         console.error('Failed to parse progress', e);
       }
@@ -76,6 +85,26 @@ export default function App() {
       setSoundEnabled(savedSound === 'true');
     }
   }, []);
+
+  // Smooth scroll to selected category detail panel when opened
+  useEffect(() => {
+    if (selectedCategoryId) {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('selected-category-detail-panel');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedCategoryId]);
+
+  // Smooth scroll to the top of the viewport when a story or game starts
+  useEffect(() => {
+    if (activeStory || activeGame) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [activeStory, activeGame]);
 
   // Save progress changes
   const saveProgress = (newProgress: UserProgress) => {
@@ -97,7 +126,8 @@ export default function App() {
       name: finalName,
       avatar: selectedAvatar,
       theme: selectedTheme,
-      lowEndMode: lowEndMode
+      lowEndMode: lowEndMode,
+      dialect: selectedDialect
     };
     saveProgress(updated);
     setNameModalOpen(false);
@@ -262,6 +292,7 @@ export default function App() {
                 setActiveStory(null);
               }}
               lowEndMode={lowEndMode}
+              dialect={selectedDialect}
             />
           ) : activeGame ? (
             <GameViewer
@@ -274,6 +305,7 @@ export default function App() {
                 setActiveGame(null);
               }}
               lowEndMode={lowEndMode}
+              dialect={selectedDialect}
             />
           ) : (
             // Standard Tab Pages
@@ -298,6 +330,7 @@ export default function App() {
                       setSelectedAvatar(progress.avatar);
                       setSelectedTheme(progress.theme || 'default');
                       setLowEndMode(progress.lowEndMode || false);
+                      setSelectedDialect(progress.dialect || 'standard');
                       setNameModalOpen(true);
                     }}
                   />
@@ -701,6 +734,45 @@ export default function App() {
                         <span className="text-[10px] font-black">{themeItem.label}</span>
                       </button>
                     ))}
+                  </div>
+                </div>
+
+                {/* Dialect / Speech Accent Selection */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-black text-slate-600 text-right pr-1">اخْتَرْ لَهْجَةَ الرَّاوِي وَالقِصَصِ 🗣️🇸🇩:</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playPopSound();
+                        setSelectedDialect('standard');
+                      }}
+                      className={`py-2.5 px-3 rounded-2xl border flex flex-col items-center gap-1 transition-all active:scale-95 cursor-pointer text-center ${
+                        selectedDialect === 'standard'
+                          ? 'border-emerald-400 bg-emerald-50 text-emerald-800 font-extrabold'
+                          : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'
+                      }`}
+                      id="btn-select-dialect-standard"
+                    >
+                      <span className="text-xs font-black">🕋 الفُصْحَى المُبَسَّطَة</span>
+                      <span className="text-[9px] font-bold text-slate-400">اللُّغَةُ العَرَبِيَّةُ العَامَّة</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playPopSound();
+                        setSelectedDialect('sudanese');
+                      }}
+                      className={`py-2.5 px-3 rounded-2xl border flex flex-col items-center gap-1 transition-all active:scale-95 cursor-pointer text-center ${
+                        selectedDialect === 'sudanese'
+                          ? 'border-amber-400 bg-amber-50 text-amber-800 font-extrabold shadow-sm'
+                          : 'border-slate-200 bg-white text-slate-500 hover:bg-slate-50'
+                      }`}
+                      id="btn-select-dialect-sudanese"
+                    >
+                      <span className="text-xs font-black">🇸🇩 اللَّهْجَةُ السُّودَانِيَّةُ</span>
+                      <span className="text-[9px] font-bold text-slate-400">بِدَارِجِيِّ الطُّفُولَةِ المَحْبُوب</span>
+                    </button>
                   </div>
                 </div>
 

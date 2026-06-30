@@ -111,6 +111,14 @@ export function playTrophyUnlockSound() {
   }
 }
 
+import { translateToSudanese } from './dialect';
+
+let currentDialect: 'standard' | 'sudanese' = 'standard';
+
+export function setAudioDialect(dialect: 'standard' | 'sudanese') {
+  currentDialect = dialect;
+}
+
 // Arabic Speech Synthesis
 let currentUtterance: SpeechSynthesisUtterance | null = null;
 
@@ -125,8 +133,11 @@ export function speakArabicText(text: string, onEnd?: () => void) {
     // Stop current speaking
     window.speechSynthesis.cancel();
 
+    // Dynamically translate standard text to Sudanese if active
+    const targetText = currentDialect === 'sudanese' ? translateToSudanese(text) : text;
+
     // Clean text from excessive emoji to prevent weird speech synthesis artifacts
-    const cleanedText = text.replace(/[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, "");
+    const cleanedText = targetText.replace(/[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, "");
 
     const utterance = new SpeechSynthesisUtterance(cleanedText);
     utterance.lang = 'ar-SA'; // Arabic Saudi Arabia or general Arabic
