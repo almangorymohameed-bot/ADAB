@@ -4,6 +4,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { motion } from 'motion/react';
 import { speakArabicText, playPopSound } from '../utils/audio';
 
 interface HeaderProps {
@@ -52,14 +53,16 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Upper bar with app logo and controls */}
       <div className="flex items-center justify-between">
         {/* Interactive High-Five Hand (Left Side matching the image!) */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.15, rotate: [0, -10, 10, -10, 10, 0], transition: { duration: 0.4 } }}
+          whileTap={{ scale: 0.85 }}
           onClick={triggerVoiceGreeting}
-          className="w-14 h-14 bg-amber-100 active:scale-90 hover:scale-105 transition-transform flex items-center justify-center rounded-2xl border-2 border-amber-300 shadow-sm text-3xl cursor-pointer"
+          className="w-14 h-14 bg-amber-100 flex items-center justify-center rounded-2xl border-2 border-amber-300 shadow-sm text-3xl cursor-pointer"
           title="أَعْطِنِي خَمْسَة! (High Five)"
           id="btn-high-five"
         >
           ✋
-        </button>
+        </motion.button>
 
         {/* Center Title Logo */}
         <div className="flex flex-col items-center">
@@ -73,12 +76,14 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Right Buttons: Voice Switch & Profile Editor */}
         <div className="flex items-center gap-2">
           {/* Audio Speaker Toggle */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.12, rotate: 3 }}
+            whileTap={{ scale: 0.88, rotate: -3 }}
             onClick={() => {
               playPopSound();
               setSoundEnabled(!soundEnabled);
             }}
-            className={`w-11 h-11 rounded-2xl border-2 flex items-center justify-center text-xl transition-all cursor-pointer ${
+            className={`w-11 h-11 rounded-2xl border-2 flex items-center justify-center text-xl transition-colors cursor-pointer ${
               soundEnabled
                 ? 'bg-emerald-50 border-emerald-300 text-emerald-600 hover:bg-emerald-100'
                 : 'bg-slate-50 border-slate-300 text-slate-400 hover:bg-slate-100'
@@ -87,20 +92,22 @@ export const Header: React.FC<HeaderProps> = ({
             id="btn-toggle-sound"
           >
             {soundEnabled ? "🔊" : "🔇"}
-          </button>
+          </motion.button>
 
           {/* Profile Editor */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.12, rotate: -3 }}
+            whileTap={{ scale: 0.88, rotate: 3 }}
             onClick={() => {
               playPopSound();
               onOpenNameModal();
             }}
-            className="w-11 h-11 bg-sky-50 border-2 border-sky-300 text-sky-600 rounded-2xl flex items-center justify-center text-xl hover:bg-sky-100 transition-all cursor-pointer"
+            className="w-11 h-11 bg-sky-50 border-2 border-sky-300 text-sky-600 rounded-2xl flex items-center justify-center text-xl hover:bg-sky-100 transition-colors cursor-pointer"
             title="تَعْدِيلُ الاسْمِ"
             id="btn-edit-profile"
           >
             👤
-          </button>
+          </motion.button>
         </div>
       </div>
 

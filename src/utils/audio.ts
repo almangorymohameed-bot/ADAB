@@ -119,6 +119,13 @@ export function setAudioDialect(dialect: 'standard' | 'sudanese') {
   currentDialect = dialect;
 }
 
+export type NarratorVoiceType = 'cartoon' | 'father' | 'mother';
+let currentNarratorVoice: NarratorVoiceType = 'cartoon';
+
+export function setNarratorVoice(voice: NarratorVoiceType) {
+  currentNarratorVoice = voice;
+}
+
 // Arabic Speech Synthesis
 let currentUtterance: SpeechSynthesisUtterance | null = null;
 
@@ -149,8 +156,17 @@ export function speakArabicText(text: string, onEnd?: () => void) {
       utterance.voice = arabicVoice;
     }
 
-    utterance.rate = 0.95; // Lively, natural kid-friendly pace
-    utterance.pitch = 1.45; // Significantly higher pitch to emulate a child's cute voice
+    // Configure rate and pitch based on narrator voice choice
+    if (currentNarratorVoice === 'father') {
+      utterance.pitch = 0.85; // Deep, calm paternal voice
+      utterance.rate = 0.85;  // Slower, comforting pace
+    } else if (currentNarratorVoice === 'mother') {
+      utterance.pitch = 1.25; // Warm, high maternal voice
+      utterance.rate = 0.92;  // Clear, caring pace
+    } else { // cartoon
+      utterance.pitch = 1.5;  // High, lively cartoon voice
+      utterance.rate = 1.0;   // Energetic pace
+    }
     
     utterance.onend = () => {
       if (onEnd) onEnd();

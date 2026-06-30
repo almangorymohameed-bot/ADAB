@@ -117,18 +117,20 @@ export const GameViewer: React.FC<GameViewerProps> = ({
       
       {/* Header Bar */}
       <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-3">
-        <button
+        <motion.button
+          whileHover={{ scale: 1.15, rotate: 10 }}
+          whileTap={{ scale: 0.85 }}
           onClick={() => {
             stopSpeaking();
             playPopSound();
             onClose();
           }}
-          className="w-10 h-10 bg-rose-50 border-2 border-rose-300 text-rose-500 rounded-2xl flex items-center justify-center text-lg active:scale-95 transition-transform cursor-pointer"
+          className="w-10 h-10 bg-rose-50 border-2 border-rose-300 text-rose-500 rounded-2xl flex items-center justify-center text-lg cursor-pointer transition-colors"
           title="عَوْدَةٌ إِلَى الرَّئِيسِيَّةِ"
           id="btn-close-game"
         >
           ✖️
-        </button>
+        </motion.button>
 
         <div className="text-center">
           <span className="text-[10px] font-extrabold text-emerald-500 uppercase tracking-wider font-mono">أَلْعَابٌ تَفَاعُلِيَّةٌ 🎮</span>
@@ -164,18 +166,20 @@ export const GameViewer: React.FC<GameViewerProps> = ({
 
               {/* Speaker sound button */}
               <div className="flex flex-col items-center gap-1.5 z-10">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.15, rotate: [0, -5, 5, -5, 0], transition: { duration: 0.3 } }}
+                  whileTap={{ scale: 0.85 }}
                   onClick={handleReadItem}
-                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md ${
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-colors shadow-md ${
                     isReading
                       ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
-                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
+                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500'
                   }`}
                   title="اقْرَأْ لِي السُّلُوكَ"
                   id={`btn-read-behavior-${currentItem.id}`}
                 >
                   🔊
-                </button>
+                </motion.button>
                 <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-100 flex items-center gap-1 animate-bounce">
                   💡 اضْغَطْ عَلَى أَيِّ كَلِمَةٍ لِنُطْقِهَا!
                 </span>
@@ -229,10 +233,10 @@ export const GameViewer: React.FC<GameViewerProps> = ({
               <div className="w-full grid grid-cols-2 gap-4 mt-auto">
                 {/* Good behavior 👍 */}
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.08, rotate: [0, -1.5, 1.5, -1.5, 0], transition: { duration: 0.3 } }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={() => handleChoice(true)}
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-[28px] py-4 md:py-5 border-b-4 border-emerald-700 flex flex-col items-center justify-center gap-2 cursor-pointer shadow-md text-center active:translate-y-1 active:border-b-0 transition-all"
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-[28px] py-4 md:py-5 border-b-4 border-emerald-700 flex flex-col items-center justify-center gap-2 cursor-pointer shadow-md text-center transition-all"
                   id="btn-choice-good"
                 >
                   <span className="text-4xl">👍</span>
@@ -242,10 +246,10 @@ export const GameViewer: React.FC<GameViewerProps> = ({
 
                 {/* Bad behavior 👎 */}
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.08, rotate: [0, -1.5, 1.5, -1.5, 0], transition: { duration: 0.3 } }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={() => handleChoice(false)}
-                  className="bg-rose-500 hover:bg-rose-600 text-white rounded-[28px] py-4 md:py-5 border-b-4 border-rose-700 flex flex-col items-center justify-center gap-2 cursor-pointer shadow-md text-center active:translate-y-1 active:border-b-0 transition-all"
+                  className="bg-rose-500 hover:bg-rose-600 text-white rounded-[28px] py-4 md:py-5 border-b-4 border-rose-700 flex flex-col items-center justify-center gap-2 cursor-pointer shadow-md text-center transition-all"
                   id="btn-choice-bad"
                 >
                   <span className="text-4xl">👎</span>
@@ -256,13 +260,15 @@ export const GameViewer: React.FC<GameViewerProps> = ({
             ) : (
               // Next button when question is answered
               <div className="w-full mt-auto">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleNext}
-                  className="w-full bg-amber-400 border-b-4 border-amber-600 text-white font-extrabold py-4 rounded-2xl shadow-md cursor-pointer hover:bg-amber-500 text-center active:translate-y-1 active:border-b-0 transition-all text-md"
+                  className="w-full bg-amber-400 border-b-4 border-amber-600 text-white font-extrabold py-4 rounded-2xl shadow-md cursor-pointer hover:bg-amber-500 text-center transition-colors text-md"
                   id="btn-game-next"
                 >
                   السُّؤَالُ التَّالِي ⏩
-                </button>
+                </motion.button>
               </div>
             )}
           </motion.div>
@@ -302,13 +308,15 @@ export const GameViewer: React.FC<GameViewerProps> = ({
             </div>
 
             {/* Claim rewards and close game */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleFinishGame}
-              className="w-full max-w-xs bg-emerald-500 border-b-4 border-emerald-700 hover:border-emerald-600 text-white font-extrabold text-md py-4 rounded-2xl shadow-md transition-all active:translate-y-1 active:border-b-0 cursor-pointer text-center"
+              className="w-full max-w-xs bg-emerald-500 border-b-4 border-emerald-700 hover:border-emerald-600 text-white font-extrabold text-md py-4 rounded-2xl shadow-md cursor-pointer text-center"
               id="btn-claim-game-rewards"
             >
               احْصُلْ عَلَى الجَائِزَةِ! 🎁
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

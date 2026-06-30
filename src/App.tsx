@@ -14,7 +14,7 @@ import { StoryViewer } from './components/StoryViewer';
 import { GameViewer } from './components/GameViewer';
 import { BadgeCabinet } from './components/BadgeCabinet';
 import { ParticleCelebration } from './components/ParticleCelebration';
-import { playPopSound, playSuccessSound, speakArabicText, stopSpeaking, setAudioDialect } from './utils/audio';
+import { playPopSound, playSuccessSound, speakArabicText, stopSpeaking, setAudioDialect, setNarratorVoice, NarratorVoiceType } from './utils/audio';
 
 const STORAGE_KEY = 'adabi_child_progress_v1';
 const SOUND_KEY = 'adabi_sound_enabled';
@@ -50,11 +50,17 @@ export default function App() {
   const [selectedTheme, setSelectedTheme] = useState<'default' | 'forest' | 'space' | 'sea'>('default');
   const [lowEndMode, setLowEndMode] = useState<boolean>(false);
   const [selectedDialect, setSelectedDialect] = useState<'standard' | 'sudanese'>('standard');
+  const [selectedNarrator, setSelectedNarrator] = useState<NarratorVoiceType>('cartoon');
 
   // Sync selected dialect with audio engine
   useEffect(() => {
     setAudioDialect(selectedDialect);
   }, [selectedDialect]);
+
+  // Sync selected narrator voice with audio engine
+  useEffect(() => {
+    setNarratorVoice(selectedNarrator);
+  }, [selectedNarrator]);
 
   // Load progress and sound configuration on mount
   useEffect(() => {
@@ -71,6 +77,9 @@ export default function App() {
         }
         if (parsed.dialect) {
           setSelectedDialect(parsed.dialect);
+        }
+        if (parsed.narratorVoice) {
+          setSelectedNarrator(parsed.narratorVoice);
         }
       } catch (e) {
         console.error('Failed to parse progress', e);
@@ -127,7 +136,8 @@ export default function App() {
       avatar: selectedAvatar,
       theme: selectedTheme,
       lowEndMode: lowEndMode,
-      dialect: selectedDialect
+      dialect: selectedDialect,
+      narratorVoice: selectedNarrator
     };
     saveProgress(updated);
     setNameModalOpen(false);
@@ -365,16 +375,18 @@ export default function App() {
                       className="bg-white rounded-3xl p-5 border-4 border-amber-300 flex flex-col gap-4 shadow-lg text-center relative mt-2"
                       id="selected-category-detail-panel"
                     >
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.15, rotate: 10 }}
+                        whileTap={{ scale: 0.85 }}
                         onClick={() => {
                           playPopSound();
                           setSelectedCategoryId(null);
                         }}
-                        className="absolute top-3 left-3 w-8 h-8 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-sm cursor-pointer border border-slate-200 active:scale-95"
+                        className="absolute top-3 left-3 w-8 h-8 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-sm cursor-pointer border border-slate-200"
                         id="btn-close-category-panel"
                       >
                         ✖️
-                      </button>
+                      </motion.button>
 
                       {/* Title of selected category */}
                       {(() => {
@@ -470,9 +482,11 @@ export default function App() {
                             <span className="text-[10px] font-bold text-slate-400 block mt-0.5">{cat.title}</span>
                           </div>
 
-                          <button
+                          <motion.button
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
                             onClick={() => handleQuickPlay('story', story.categoryId)}
-                            className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold cursor-pointer border-2 transition-all active:scale-95 ${
+                            className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold cursor-pointer border-2 transition-colors ${
                               isCompleted
                                 ? 'bg-amber-50 border-amber-300 text-amber-700 hover:bg-amber-100'
                                 : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 shadow-sm'
@@ -480,7 +494,7 @@ export default function App() {
                             id={`btn-quick-story-${story.categoryId}`}
                           >
                             {isCompleted ? 'قِرَاءَة مَرَّةً أُخْرَى 🔁' : 'اقْرَأْ الآنَ 📖'}
-                          </button>
+                          </motion.button>
                         </div>
                       );
                     })}
@@ -521,9 +535,11 @@ export default function App() {
                             <span className="text-[10px] font-bold text-slate-400 block mt-0.5">{cat.title}</span>
                           </div>
 
-                          <button
+                          <motion.button
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.92 }}
                             onClick={() => handleQuickPlay('game', game.categoryId)}
-                            className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold cursor-pointer border-2 transition-all active:scale-95 ${
+                            className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold cursor-pointer border-2 transition-colors ${
                               isCompleted
                                 ? 'bg-emerald-50 border-emerald-300 text-emerald-700 hover:bg-emerald-100'
                                 : 'bg-emerald-500 border-emerald-600 text-white hover:bg-emerald-600 shadow-sm'
@@ -531,7 +547,7 @@ export default function App() {
                             id={`btn-quick-game-${game.categoryId}`}
                           >
                             {isCompleted ? 'الْعَبْ مَرَّةً أُخْرَى 🔁' : 'الْعَبْ الآنَ 🎮'}
-                          </button>
+                          </motion.button>
                         </div>
                       );
                     })}
@@ -564,68 +580,76 @@ export default function App() {
         <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-md bg-white/95 backdrop-blur-md border-2 border-orange-100 py-3 px-5 rounded-[28px] shadow-xl flex items-center justify-around z-30" id="global-bottom-navbar">
           
           {/* Main Home Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: activeTab === 'home' ? 1.15 : 1.08 }}
+            whileTap={{ scale: 0.85 }}
             onClick={() => {
               playPopSound();
               setActiveTab('home');
               setSelectedCategoryId(null);
             }}
-            className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
+            className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
               activeTab === 'home' ? 'text-amber-500 scale-110' : 'text-slate-400 hover:text-slate-500'
             }`}
             id="nav-btn-home"
           >
             <span className="text-2xl">🏡</span>
             <span className="text-[10px] font-black font-sans leading-none">الرَّئِيسِيَّة</span>
-          </button>
+          </motion.button>
 
           {/* Games Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: activeTab === 'games' ? 1.15 : 1.08 }}
+            whileTap={{ scale: 0.85 }}
             onClick={() => {
               playPopSound();
               setActiveTab('games');
               setSelectedCategoryId(null);
             }}
-            className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
+            className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
               activeTab === 'games' ? 'text-emerald-500 scale-110' : 'text-slate-400 hover:text-slate-500'
             }`}
             id="nav-btn-games"
           >
             <span className="text-2xl">🎮</span>
             <span className="text-[10px] font-black font-sans leading-none">الأَلْعَاب</span>
-          </button>
+          </motion.button>
 
           {/* Stories Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: activeTab === 'stories' ? 1.15 : 1.08 }}
+            whileTap={{ scale: 0.85 }}
             onClick={() => {
               playPopSound();
               setActiveTab('stories');
               setSelectedCategoryId(null);
             }}
-            className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
+            className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
               activeTab === 'stories' ? 'text-sky-500 scale-110' : 'text-slate-400 hover:text-slate-500'
             }`}
             id="nav-btn-stories"
           >
             <span className="text-2xl">📖</span>
             <span className="text-[10px] font-black font-sans leading-none">القِصَص</span>
-          </button>
+          </motion.button>
 
           {/* Cabinet / Shelf Button */}
-          <button
+          <motion.button
+            whileHover={{ scale: activeTab === 'cabinet' ? 1.15 : 1.08 }}
+            whileTap={{ scale: 0.85 }}
             onClick={() => {
               playPopSound();
               setActiveTab('cabinet');
               setSelectedCategoryId(null);
             }}
-            className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
+            className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
               activeTab === 'cabinet' ? 'text-rose-500 scale-110' : 'text-slate-400 hover:text-slate-500'
             }`}
             id="nav-btn-rewards"
           >
             <span className="text-2xl">🏆</span>
             <span className="text-[10px] font-black font-sans leading-none">جَوَائِزِي</span>
-          </button>
+          </motion.button>
         </nav>
 
         {/* PROFILE EDITOR & ONBOARDING NAME REGISTRATION MODAL */}
@@ -773,6 +797,52 @@ export default function App() {
                       <span className="text-xs font-black">🇸🇩 اللَّهْجَةُ السُّودَانِيَّةُ</span>
                       <span className="text-[9px] font-bold text-slate-400">بِدَارِجِيِّ الطُّفُولَةِ المَحْبُوب</span>
                     </button>
+                  </div>
+                </div>
+
+                {/* Narrator Voice Selection */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-black text-slate-600 text-right pr-1">اخْتَرْ صَوْتَ الرَّاوِي 🗣️✨:</span>
+                  <div className="grid grid-cols-3 gap-1.5 bg-slate-50 p-2 rounded-2xl border border-slate-200">
+                    {[
+                      { id: 'father', label: 'صَوْتُ بَابَا 🧔', icon: '👨‍💼', desc: 'هَادِئ وَمُطْمَئِنٌّ', activeClass: 'border-blue-400 bg-blue-50 text-blue-800 font-extrabold shadow-sm scale-105' },
+                      { id: 'mother', label: 'صَوْتُ مَامَا 👩', icon: '👩‍🦰', desc: 'حَنُونٌ وَدَافِئٌ', activeClass: 'border-pink-400 bg-pink-50 text-pink-800 font-extrabold shadow-sm scale-105' },
+                      { id: 'cartoon', label: 'صَدِيقٌ مَرِحٌ 🦁', icon: '🦁', desc: 'مَرِحٌ وَعَالٍ', activeClass: 'border-amber-400 bg-amber-50 text-amber-800 font-extrabold shadow-sm scale-105' }
+                    ].map((voiceItem) => (
+                      <button
+                        key={voiceItem.id}
+                        type="button"
+                        onClick={() => {
+                          playPopSound();
+                          setSelectedNarrator(voiceItem.id as any);
+                          // Set the narrator voice immediately to let the child hear the preview sample in that exact voice!
+                          setNarratorVoice(voiceItem.id as any);
+                          let sampleText = "";
+                          if (voiceItem.id === 'father') {
+                            sampleText = "مَرْحَبًا يَا بَطَلُ، أَنَا صَوْتُ بَابَا.";
+                          } else if (voiceItem.id === 'mother') {
+                            sampleText = "أَهْلًا يَا حَبِيبِي، أَنَا صَوْتُ مَامَا الحَنُونِ.";
+                          } else {
+                            sampleText = "مَرْحَبًا! أَنَا صَدِيقُكَ المَرِحُ!";
+                          }
+                          setTimeout(() => {
+                            speakArabicText(sampleText);
+                          }, 100);
+                        }}
+                        className={`p-1.5 rounded-xl border flex flex-col items-center gap-1 transition-all active:scale-90 cursor-pointer text-center justify-between min-h-[82px] ${
+                          selectedNarrator === voiceItem.id
+                            ? voiceItem.activeClass
+                            : 'opacity-75 border-slate-200 bg-white hover:opacity-100 text-slate-600'
+                        }`}
+                        id={`btn-select-voice-${voiceItem.id}`}
+                      >
+                        <span className="text-2xl leading-none">{voiceItem.icon}</span>
+                        <div className="flex flex-col items-center gap-0.5">
+                          <span className="text-[10px] font-black leading-tight">{voiceItem.label}</span>
+                          <span className="text-[8px] font-bold text-slate-400 leading-none">{voiceItem.desc}</span>
+                        </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
 

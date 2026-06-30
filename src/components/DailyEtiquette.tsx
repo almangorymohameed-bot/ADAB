@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { DAILY_ETIQUETTES } from '../data/etiquettes';
 import { Illustration } from './Illustration';
 import { speakArabicText, playPopSound } from '../utils/audio';
@@ -63,14 +64,16 @@ export const DailyEtiquette: React.FC<DailyEtiquetteProps> = ({ soundEnabled }) 
           <div className="bg-amber-100/70 border-2 border-amber-300 rounded-2xl px-5 py-2 w-full flex items-center justify-between shadow-sm relative">
             
             {/* Play Sound Button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.15, rotate: [0, -4, 4, -4, 0], transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.85 }}
               onClick={handleSpeech}
-              className="w-9 h-9 bg-amber-400 active:scale-90 transition-transform flex items-center justify-center rounded-xl text-white text-md cursor-pointer hover:bg-amber-500 shadow-sm border border-amber-500"
+              className="w-9 h-9 bg-amber-400 flex items-center justify-center rounded-xl text-white text-md cursor-pointer hover:bg-amber-500 shadow-sm border border-amber-500"
               title="اصْمَعْ إِلَى الأَدَبِ"
               id={`btn-listen-daily-${currentItem.id}`}
             >
               🔊
-            </button>
+            </motion.button>
 
             {/* Title & Description with diacritics */}
             <div className="flex-1 text-right pr-3">
@@ -90,8 +93,10 @@ export const DailyEtiquette: React.FC<DailyEtiquetteProps> = ({ soundEnabled }) 
       {/* Dots Carousel Indicators */}
       <div className="flex items-center gap-1.5 mt-2.5 mb-1" id="carousel-dots-indicator">
         {DAILY_ETIQUETTES.map((_, index) => (
-          <button
+          <motion.button
             key={index}
+            whileHover={{ scale: 1.3 }}
+            whileTap={{ scale: 0.8 }}
             onClick={() => handleDotClick(index)}
             className={`h-3 rounded-full transition-all cursor-pointer ${
               index === activeIndex ? 'w-6 bg-sky-500 border border-sky-600' : 'w-3 bg-slate-300 hover:bg-slate-400'

@@ -77,4 +77,5 @@ export interface UserProgress {
   theme?: 'default' | 'forest' | 'space' | 'sea';
   lowEndMode?: boolean;
   dialect?: 'standard' | 'sudanese';
+  narratorVoice?: 'cartoon' | 'father' | 'mother';
 }

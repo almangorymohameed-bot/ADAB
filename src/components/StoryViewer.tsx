@@ -91,18 +91,20 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
       
       {/* Upper header section */}
       <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-3">
-        <button
+        <motion.button
+          whileHover={{ scale: 1.15, rotate: 10 }}
+          whileTap={{ scale: 0.85 }}
           onClick={() => {
             stopSpeaking();
             playPopSound();
             onClose();
           }}
-          className="w-10 h-10 bg-rose-50 border-2 border-rose-300 text-rose-500 rounded-2xl flex items-center justify-center text-lg active:scale-95 transition-transform cursor-pointer"
+          className="w-10 h-10 bg-rose-50 border-2 border-rose-300 text-rose-500 rounded-2xl flex items-center justify-center text-lg cursor-pointer transition-colors"
           title="عَوْدَةٌ إِلَى الرَّئِيسِيَّةِ"
           id="btn-close-story"
         >
           ✖️
-        </button>
+        </motion.button>
 
         <div className="text-center">
           <span className="text-[10px] font-extrabold text-amber-500 uppercase tracking-wider font-mono">قِصَّةٌ مُشَوِّقَةٌ 📖</span>
@@ -136,18 +138,20 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             <div className="w-full bg-white rounded-2xl p-4 border-2 border-slate-200 shadow-sm flex flex-col items-center gap-3 relative">
               {/* Audio Reading Trigger */}
               <div className="flex flex-col items-center gap-1.5">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.15, rotate: [0, -5, 5, -5, 0], transition: { duration: 0.3 } }}
+                  whileTap={{ scale: 0.85 }}
                   onClick={handleReadSlide}
-                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-all shadow-md ${
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center text-xl cursor-pointer transition-colors shadow-md ${
                     isReading
                       ? 'bg-emerald-500 border-emerald-600 text-white animate-pulse'
-                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500 active:scale-90'
+                      : 'bg-amber-400 border-amber-500 text-white hover:bg-amber-500'
                   }`}
                   title="اقْرَأْ لِي القِصَّةَ"
                   id={`btn-narrate-slide-${currentSlideIndex}`}
                 >
                   🔊
-                </button>
+                </motion.button>
                 <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2.5 py-1 rounded-full border border-slate-100 flex items-center gap-1 animate-bounce">
                   💡 اضْغَطْ عَلَى أَيِّ كَلِمَةٍ لِنُطْقِهَا!
                 </span>
@@ -186,10 +190,12 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             {/* Slide control navigation buttons */}
             <div className="w-full flex items-center justify-between mt-auto pt-4 border-t border-dashed border-slate-200">
               {/* Prev Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: currentSlideIndex === 0 ? 1 : 1.08 }}
+                whileTap={{ scale: currentSlideIndex === 0 ? 1 : 0.92 }}
                 onClick={handlePrev}
                 disabled={currentSlideIndex === 0}
-                className={`flex items-center gap-1 px-4 py-2.5 rounded-2xl border-2 text-sm font-bold cursor-pointer transition-all active:scale-95 ${
+                className={`flex items-center gap-1 px-4 py-2.5 rounded-2xl border-2 text-sm font-bold cursor-pointer transition-colors ${
                   currentSlideIndex === 0
                     ? 'border-slate-200 text-slate-300 bg-slate-100 cursor-not-allowed'
                     : 'border-slate-300 text-slate-600 bg-white hover:bg-slate-50'
@@ -197,7 +203,7 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
                 id="btn-prev-slide"
               >
                 ◀️ السَّابِقُ
-              </button>
+              </motion.button>
 
               {/* Progress Indicator */}
               <div className="flex items-center gap-1.5" id="story-progress-dots">
@@ -212,13 +218,15 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
               </div>
 
               {/* Next Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
                 onClick={handleNext}
-                className="flex items-center gap-1 px-5 py-2.5 rounded-2xl border-2 border-amber-400 text-white bg-amber-400 font-extrabold text-sm hover:bg-amber-500 active:scale-95 transition-all cursor-pointer"
+                className="flex items-center gap-1 px-5 py-2.5 rounded-2xl border-2 border-amber-400 text-white bg-amber-400 font-extrabold text-sm hover:bg-amber-500 transition-colors cursor-pointer"
                 id="btn-next-slide"
               >
                 {currentSlideIndex === story.slides.length - 1 ? 'نِهَايَةٌ 🏆' : 'التَّالِي ▶️'}
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         ) : (
@@ -250,13 +258,15 @@ export const StoryViewer: React.FC<StoryViewerProps> = ({
             </div>
 
             {/* Play game button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleFinishStory}
-              className="w-full max-w-xs bg-emerald-500 border-b-4 border-emerald-700 hover:border-emerald-600 text-white font-extrabold text-md py-4 rounded-2xl shadow-md transition-all active:translate-y-1 active:border-b-0 cursor-pointer text-center"
+              className="w-full max-w-xs bg-emerald-500 border-b-4 border-emerald-700 hover:border-emerald-600 text-white font-extrabold text-md py-4 rounded-2xl shadow-md cursor-pointer text-center"
               id="btn-complete-story"
             >
               افْتَحْ اللُّعْبَةَ الآنَ! 🎮
-            </button>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

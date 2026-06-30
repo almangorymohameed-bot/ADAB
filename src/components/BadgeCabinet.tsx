@@ -61,14 +61,16 @@ export const BadgeCabinet: React.FC<BadgeCabinetProps> = ({ progress, soundEnabl
         </div>
 
         {/* Level Audio Speaker */}
-        <button
+        <motion.button
+          whileHover={{ scale: 1.15, rotate: [0, -5, 5, -5, 0], transition: { duration: 0.3 } }}
+          whileTap={{ scale: 0.85 }}
           onClick={handleRankVoice}
-          className="w-12 h-12 bg-white/20 active:scale-90 flex items-center justify-center rounded-2xl text-2xl hover:bg-white/30 cursor-pointer shadow-inner border border-white/30"
+          className="w-12 h-12 bg-white/20 flex items-center justify-center rounded-2xl text-2xl hover:bg-white/30 cursor-pointer shadow-inner border border-white/30"
           title="اصْمَعْ اللَّقَبَ"
           id="btn-speak-rank"
         >
           🔊
-        </button>
+        </motion.button>
       </div>
 
       {/* Badge Cabinet Display Cabinet Grid */}
@@ -84,8 +86,8 @@ export const BadgeCabinet: React.FC<BadgeCabinetProps> = ({ progress, soundEnabl
               return (
                 <motion.button
                   key={reward.id}
-                  whileHover={{ scale: isUnlocked ? 1.05 : 1 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: isUnlocked ? 1.12 : 1.05, rotate: isUnlocked ? [0, -3, 3, -3, 0] : 0, transition: { duration: 0.3 } }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={() => handleBadgeClick(reward, isUnlocked)}
                   className={`aspect-square p-4 rounded-2xl border-2 flex flex-col items-center justify-between shadow-sm relative cursor-pointer transition-all ${
                     isUnlocked
